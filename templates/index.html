@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAG Document Q&A</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .container { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+        input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px;}
+        button:hover { background: #0056b3; }
+        #response { margin-top: 20px; padding: 10px; background: #f4f4f4; border-radius: 4px; white-space: pre-wrap;}
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>RAG Document QA System (Groq)</h2>
+        
+        <div id="auth-section">
+            <h3>Login</h3>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="app-section" class="hidden">
+            <h3>Upload Document</h3>
+            <input type="file" id="fileInput" accept=".pdf">
+            <button onclick="uploadFile()">Upload & Process</button>
+
+            <h3>Ask a Question</h3>
+            <input type="text" id="questionInput" placeholder="Ask about your document...">
+            <button onclick="askQuestion()">Ask</button>
+            
+            <div id="response"></div>
+            <button onclick="logout()" style="background: red; margin-top:20px;">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        let accessToken = null;
+
+        async function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            
+            const res = await fetch('/api/auth/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p })
+            });
+            
+            if(res.ok) {
+                const data = await res.json();
+                accessToken = data.access;
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('app-section').classList.remove('hidden');
+                document.getElementById('response').innerText = "Logged in successfully!";
+            } else {
+                alert("Login failed. Did you create a superuser?");
+            }
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            if(!fileInput.files[0]) return alert("Select a file");
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            document.getElementById('response').innerText = "Processing file... (This may take a moment)";
+            
+            const res = await fetch('/api/upload/', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${accessToken}` },
+                body: formData
+            });
+            
+            const data = await res.json();
+            document.getElementById('response').innerText = data.message || data.error;
+        }
+
+        async function askQuestion() {
+            const question = document.getElementById('questionInput').value;
+            if(!question) return;
+
+            document.getElementById('response').innerText = "Thinking...";
+            
+            const res = await fetch('/api/query/', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}` 
+                },
+                body: JSON.stringify({ question: question })
+            });
+            
+            const data = await res.json();
+            document.getElementById('response').innerText = data.answer || data.error;
+        }
+
+        function logout() {
+            accessToken = null;
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('app-section').classList.add('hidden');
+            document.getElementById('response').innerText = "";
+            document.getElementById('username').value = "";
+            document.getElementById('password').value = "";
+            document.getElementById('questionInput').value = "";
+        }
+    </script>
+</body>
+</html>
