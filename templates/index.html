@@ -68,7 +68,7 @@
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
 
-            document.getElementById('response').innerText = "Processing file... (This may take a moment)";
+            document.getElementById('response').innerText = "Processing file...";
             
             const res = await fetch('/api/upload/', {
                 method: 'POST',
@@ -104,9 +104,6 @@
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('app-section').classList.add('hidden');
             document.getElementById('response').innerText = "";
-            document.getElementById('username').value = "";
-            document.getElementById('password').value = "";
-            document.getElementById('questionInput').value = "";
         }
     </script>
 </body>
