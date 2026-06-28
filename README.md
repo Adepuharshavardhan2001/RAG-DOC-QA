@@ -39,21 +39,38 @@ A full-stack web application that allows users to upload PDF documents and ask q
 ## 📂 Project Structure
 
 rag_doc-qa/
+
 ├── api/
+
 │ ├── models.py # Document model with validation
+
 │ ├── views.py # Upload & Query API endpoints
+
 │ ├── urls.py # API routes
+
 │ └── rag_engine.py # RAG pipeline (chunk, embed, query)
+
+
 ├── core/
+
 │ ├── settings.py # Django configuration
+
 │ └── urls.py # Main URL routing
+
 ├── templates/
+
 │ └── index.html # Frontend UI
+
 ├── manage.py
+
 ├── requirements.txt
+
 ├── Dockerfile
+
 ├── docker-compose.yml
+
 ├── .env.example
+
 └── README.md
 
 
