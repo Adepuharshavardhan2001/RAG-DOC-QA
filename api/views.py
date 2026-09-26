@@ -1,5 +1,6 @@
 import os
 import logging
+from pathlib import Path
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -27,11 +28,14 @@ class UploadPDFView(APIView):
         if file_obj.size > 10 * 1024 * 1024:
             return Response({'error': 'File size must be under 10MB'}, status=status.HTTP_400_BAD_REQUEST)
 
-        save_path = os.path.join(settings.MEDIA_ROOT, 'pdfs')
-        os.makedirs(save_path, exist_ok=True)
+        # FIX: Use Path and str() to avoid WindowsPath + str errors
+        save_path = Path(settings.MEDIA_ROOT) / 'pdfs'
+        save_path.mkdir(parents=True, exist_ok=True)
 
         file_name = default_storage.save(f"pdfs/{file_obj.name}", file_obj)
-        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+
+        # FIX: Convert to string for pymupdf and os.path operations
+        file_path = str(Path(settings.MEDIA_ROOT) / file_name)
 
         doc = Document.objects.create(
             user=request.user,

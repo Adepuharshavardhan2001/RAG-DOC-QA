@@ -9,3 +9,4 @@ llama-index-embeddings-huggingface
 python-dotenv==1.0.1
 pypdf==4.0.1
 gunicorn==21.2.0
+whitenoise
