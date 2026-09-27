@@ -61,7 +61,9 @@ The system is evaluated on an **18-question test set** covering six categories, 
 **How to reproduce:**
 ```bash
 python run_eval.py
-🚀 Deployment
+
+Deployment
+
 The app is deployed on AWS EC2 (t3.micro, Ubuntu 26.04).
 
 Stack:
@@ -102,7 +104,8 @@ WindowsPath vs str mismatch in views.py → fixed with explicit str() conversion
 
 /tmp tmpfs (455 MB) too small for numpy compilation → remounted to 2 GB.
 
-⚠️ Known Limitations
+Known Limitations
+
 Text-only: Only text is extracted from PDFs. Embedded images, diagrams, and scanned pages are not supported. A natural extension would be OCR (for scanned PDFs) or a multimodal LLM.
 
 No tables: Table content is extracted as flat text but structure isn't preserved.
@@ -147,7 +150,7 @@ LLM (Groq) → generate answer with strict grounding
 Answer or "Not in document"
 For a deep dive into architecture, trade-offs, and known limitations, see SYSTEM_DESIGN.md.
 
-📁 Project Structure
+ Project Structure
 text
 rag-doc-qa/
 ├── api/
@@ -170,7 +173,8 @@ rag-doc-qa/
 ├── requirements.txt
 ├── README.md
 └── SYSTEM_DESIGN.md
-💻 Installation
+
+Installation
 1. Clone
 bash
 git clone https://github.com/Adepuharshavardhan2001/RAG-DOC-QA.git
