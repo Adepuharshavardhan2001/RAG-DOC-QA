@@ -120,7 +120,7 @@ No HTTPS: Currently HTTP only. In production, nginx + Let's Encrypt would add SS
 
 Dynamic IP: The EC2 public IP is not allocated as an Elastic IP, so it may change on instance restart.
 
-🛠️ Tech Stack
+ Tech Stack
 Layer	Technology
 Backend	Django, Django REST Framework
 Auth	JWT (SimpleJWT)
@@ -133,7 +133,9 @@ Keyword Search	BM25 (rank_bm25)
 PDF Parsing	PyMuPDF
 Frontend	HTML, CSS, Vanilla JavaScript
 Deployment	AWS EC2, Gunicorn, systemd
-🧠 Architecture
+
+Architecture
+
 text
 User Question
      ↓
@@ -150,7 +152,8 @@ LLM (Groq) → generate answer with strict grounding
 Answer or "Not in document"
 For a deep dive into architecture, trade-offs, and known limitations, see SYSTEM_DESIGN.md.
 
- Project Structure
+Project Structure
+
 text
 rag-doc-qa/
 ├── api/
@@ -175,6 +178,7 @@ rag-doc-qa/
 └── SYSTEM_DESIGN.md
 
 Installation
+
 1. Clone
 bash
 git clone https://github.com/Adepuharshavardhan2001/RAG-DOC-QA.git
