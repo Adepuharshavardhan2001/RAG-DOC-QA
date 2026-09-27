@@ -9,7 +9,23 @@ A production-grade Retrieval-Augmented Generation (RAG) system that lets users u
 
 ---
 
-## 🚀 Features
+##  Live Demo
+
+**URL:** http://13.235.79.43:8000
+
+**Login credentials:**
+- **Username:** `user`
+- **Password:** `user@1234`
+
+**What to try:** Upload any PDF (research paper, contract, manual) and ask questions about it.
+
+> **Note:** Deployed on AWS EC2 (t3.micro, 1 GB RAM). Cold starts may take a few seconds. JWT tokens expire after 60 minutes — log in again if you get an error.
+
+![Live Demo](docs/screenshots/live-demo.png)
+
+---
+
+##  Features
 
 ### Core RAG Pipeline
 - **PDF Ingestion** — Upload PDFs via a web interface. Text is extracted with PyMuPDF, chunked with page-level metadata, and embedded.
@@ -29,17 +45,17 @@ A production-grade Retrieval-Augmented Generation (RAG) system that lets users u
 
 ---
 
-## 📊 Evaluation Results
+##  Evaluation Results
 
 The system is evaluated on an **18-question test set** covering six categories, using the paper *"A Comprehensive Survey on Graph Neural Networks"* (20 pages, IEEE) as the test document.
 
 | Category | Questions | Passed |
 |---|---|---|
-| Factual retrieval (title, authors, acronyms) | 5 | 5/5 ✅ |
-| Taxonomy (GNN categories, GAE definition) | 2 | 2/2 ✅ |
-| Multi-item retrieval (datasets, directions, applications) | 3 | 2/3 ⚠️ |
-| Reasoning (GNN vs network embedding, spectral vs spatial) | 2 | 2/2 ✅ |
-| Hallucination refusal (off-topic questions) | 6 | 6/6 ✅ |
+| Factual retrieval (title, authors, acronyms) | 5 | 5/5  |
+| Taxonomy (GNN categories, GAE definition) | 2 | 2/2  |
+| Multi-item retrieval (datasets, directions, applications) | 3 | 2/3  |
+| Reasoning (GNN vs network embedding, spectral vs spatial) | 2 | 2/2  |
+| Hallucination refusal (off-topic questions) | 6 | 6/6  |
 | **Total** | **18** | **17/18 (94.4%)** |
 
 **How to reproduce:**
